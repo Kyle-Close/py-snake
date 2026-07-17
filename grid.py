@@ -1,6 +1,8 @@
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, GRID_COLS, GRID_ROWS, FOOD_HEIGHT, FOOD_WIDTH
 import pygame
 
+from snake import Snake
+
 
 class Grid:
     def __init__(self):
@@ -28,8 +30,15 @@ class Grid:
         pygame.draw.rect(screen, "green", food)
 
     @staticmethod
-    def draw_snake(screen, x: int, y: int):
-        x = (x * (SCREEN_WIDTH // GRID_COLS)) + ((SCREEN_WIDTH // GRID_COLS) // 2)
-        y = y * (SCREEN_HEIGHT // GRID_ROWS) + ((SCREEN_HEIGHT // GRID_ROWS) // 2)
-        size = SCREEN_HEIGHT // GRID_ROWS // 2
-        pygame.draw.circle(screen, "red", (x, y), size)
+    def draw_snake(screen, snake: Snake):
+        if snake.prev_tail_pos:
+            x = snake.prev_tail_pos[0] * (SCREEN_WIDTH // GRID_COLS) + ((SCREEN_WIDTH // GRID_COLS) // 2)
+            y = snake.prev_tail_pos[1] * (SCREEN_HEIGHT // GRID_ROWS) + ((SCREEN_HEIGHT // GRID_ROWS) // 2)
+            size = SCREEN_HEIGHT // GRID_ROWS // 3
+            pygame.draw.circle(screen, "black", (x, y), size)
+
+        for pos in snake.pos_stack:
+            x = (pos[0] * (SCREEN_WIDTH // GRID_COLS)) + ((SCREEN_WIDTH // GRID_COLS) // 2)
+            y = pos[1] * (SCREEN_HEIGHT // GRID_ROWS) + ((SCREEN_HEIGHT // GRID_ROWS) // 2)
+            size = SCREEN_HEIGHT // GRID_ROWS // 3
+            pygame.draw.circle(screen, "red", (x, y), size)
