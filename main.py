@@ -15,7 +15,7 @@ game = Game()
 screen.fill("black")
 Grid.draw_grid_lines(screen)
 
-step_mode = True
+step_mode = False
 
 while running:
     if step_mode:
@@ -37,7 +37,7 @@ while running:
                     elif event.key == pygame.K_RIGHT:
                         game.snake.direction = Direction.RIGHT
     else:
-        clock.tick(60)
+        clock.tick(10)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -52,10 +52,15 @@ while running:
                     game.snake.direction = Direction.RIGHT
 
     # 2. update game state
-    food_pos = game.food_pos
-    ate = game.update_snake_pos()
-    if ate:
-        Grid.clear_food(screen, food_pos)
+    data = game.get_frame_meta_data()
+
+    if not data.is_in_bounds or data.is_self_collision:
+        break
+
+    game.update_snake_pos(data.next_head_pos, data.will_eat)
+
+    if data.will_eat:
+        Grid.clear_food(screen, data.original_food_pos)
 
     # 3. draw
     Grid.draw_food(screen, game.food_pos)
