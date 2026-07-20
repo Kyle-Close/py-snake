@@ -13,20 +13,7 @@ class Snake:
         self.size = 1
         self.direction = Direction.RIGHT
         self.pos_stack = [(0, 0)]
-        self.prev_tail_pos = ()
-
-    def move_snake(self, did_eat: bool):
-        if did_eat:
-            new_head = self.calc_next_coords(self.pos_stack[-1])
-            self.pos_stack.append(new_head)
-            return
-
-        top = self.pos_stack.pop()
-        head = top if len(self.pos_stack) == 0 else self.pos_stack[-1]
-
-        self.pos_stack.append(self.calc_next_coords(head))
-
-        self.prev_tail_pos = top
+        self.prev_tail_pos: None | tuple[int, int] = None
 
     def calc_next_coords(self, curr_coords: tuple[int, int]):
         match self.direction:

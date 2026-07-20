@@ -23,11 +23,17 @@ class Grid:
         screen.blit(overlay, (0, 0))
 
     @staticmethod
-    def draw_food(screen, x: int, y: int):
-        x = x * (SCREEN_WIDTH // GRID_COLS)
-        y = y * (SCREEN_HEIGHT // GRID_ROWS)
+    def draw_food(screen, pos: tuple[int, int]):
+        x = pos[0] * (SCREEN_WIDTH // GRID_COLS) + (SCREEN_WIDTH // GRID_COLS // 4)
+        y = pos[1] * (SCREEN_HEIGHT // GRID_ROWS) + (SCREEN_HEIGHT // GRID_ROWS // 4)
         food = pygame.Rect(x, y, FOOD_WIDTH, FOOD_HEIGHT)
         pygame.draw.rect(screen, "green", food)
+
+    @staticmethod
+    def clear_food(screen, pos: tuple[int, int]):
+        x = pos[0] * (SCREEN_WIDTH // GRID_COLS) + (SCREEN_WIDTH // GRID_COLS // 4)
+        y = pos[1] * (SCREEN_HEIGHT // GRID_ROWS) + (SCREEN_HEIGHT // GRID_ROWS // 4)
+        pygame.draw.rect(screen, "black", pygame.Rect(x, y, FOOD_WIDTH, FOOD_HEIGHT))
 
     @staticmethod
     def draw_snake(screen, snake: Snake):
