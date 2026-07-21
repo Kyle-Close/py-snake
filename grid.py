@@ -1,3 +1,5 @@
+from pygame.font import Font
+from pygame.surface import Surface
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, GRID_COLS, GRID_ROWS, FOOD_HEIGHT, FOOD_WIDTH
 import pygame
 
@@ -30,12 +32,6 @@ class Grid:
         pygame.draw.rect(screen, "green", food)
 
     @staticmethod
-    def clear_food(screen, pos: tuple[int, int]):
-        x = pos[0] * (SCREEN_WIDTH // GRID_COLS) + (SCREEN_WIDTH // GRID_COLS // 4)
-        y = pos[1] * (SCREEN_HEIGHT // GRID_ROWS) + (SCREEN_HEIGHT // GRID_ROWS // 4)
-        pygame.draw.rect(screen, "black", pygame.Rect(x, y, FOOD_WIDTH, FOOD_HEIGHT))
-
-    @staticmethod
     def draw_snake(screen, snake: Snake):
         if snake.prev_tail_pos:
             x = snake.prev_tail_pos[0] * (SCREEN_WIDTH // GRID_COLS) + ((SCREEN_WIDTH // GRID_COLS) // 2)
@@ -48,3 +44,14 @@ class Grid:
             y = pos[1] * (SCREEN_HEIGHT // GRID_ROWS) + ((SCREEN_HEIGHT // GRID_ROWS) // 2)
             size = SCREEN_HEIGHT // GRID_ROWS // 3
             pygame.draw.circle(screen, "red", (x, y), size)
+
+    @staticmethod
+    def draw_score(screen: Surface, score: int, font: Font):
+        WHITE = (255, 255, 255)
+        GREEN = (0, 255, 0)
+        BLUE = (0, 0, 128)
+
+        text_surface = font.render(f"Score: {score}", True, (255, 255, 255))
+        text_rect = text_surface.get_rect()
+
+        screen.blit(text_surface, (20, 20))

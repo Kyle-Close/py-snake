@@ -10,7 +10,6 @@ class Direction(Enum):
 
 class Snake:
     def __init__(self):
-        self.size = 1
         self.direction = Direction.RIGHT
         self.pos_stack = [(0, 0)]
         self.prev_tail_pos: None | tuple[int, int] = None

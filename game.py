@@ -20,9 +20,6 @@ class Game:
         self.food_pos = self.get_new_food_pos()
         self.score = 0
 
-    def end_game(self):
-        pygame.quit()
-
     def get_frame_meta_data(self) -> FrameMetaData:
         next_head_pos = self.snake.calc_next_coords(self.snake.pos_stack[-1])
         will_eat = next_head_pos == self.food_pos
